@@ -47,7 +47,7 @@ const text = `
   it's usually nice to visit with a friend, but this year, we're left alone.\n
   knowing this, the california parks department set up a webcam.\n
   it's beautiful, but it's quiet.
-  so i decided to bring us some sound.\n
+  so let's make some sound.\n
   just like the poppies, the score here responds to its surroundings.\n
   the more of us there are, the sunnier it becomes.\n
 `
