@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+/* http://stencil.wiki/colors */
+
+html {
+    margin: 0;
+    quotes: "\201C" "\201D";
+    /* position: relative; */
+    overflow-x: hidden;
+    /* COLORS */
+    --skyblue: rgba(98, 168, 229, 0.25);
+    --skyblue-plus: rgba(98, 168, 229, 0.75);
+    --poppy: rgba(255, 108, 47, 0.75);
+    --darkblue: rgba(35, 91, 168, 1);
+    --modal-bg:  rgba(98, 168, 229, 1.0);
+}
+
+body {
+    /* position: relative; */
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 20px;
+}
