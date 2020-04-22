@@ -1,73 +1,53 @@
-import React from 'react';
-import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
+import React from 'react'
+import Popup from 'reactjs-popup'
+import styled from 'styled-components'
 
-const Modal = styled.div`
-  position: fixed;
-  display: flex;
-  align-self: center;
-  justify-content: center;
-  z-index: 1;
-  width: 50%;
-  height: 200px;
-  font-size: .75em;
-  padding: 40px;
-  ${'' /* background: linear-gradient(var(--skyblue), var(--skyblue)), linear-gradient(white, white); */}
-  overflow: scroll;;
-  font-weight: bold;
-  color: var(--darkblue);
+const AboutPopUp = styled(Popup)`
+  &-overlay {
+  }
+  &-content {
+    font-family: 'Space Mono';
+    overflow: scroll;
+    padding: 40px !important;
+    width: 70% !important;
+    background: linear-gradient(var(--skyblue), var(--skyblue)), linear-gradient(white, white) !important;
+    border: 0px !important;
+  }
 `
-
-const StartButton = styled.button`
-  background: linear-gradient(var(--darkblue), var(--darkblue)), linear-gradient(white, white);
-  font-family: "Space Mono", monospace;
-  font-size: 1.2em;
+const AboutButton = styled.button`
+  font-family: 'Space Mono';
   font-weight: 700;
-  color: white;
-  text-decoration: none;
-  padding: 20px;
-  display: inline-block;
-  transition: all 0.4s ease 0s;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  width: auto;
+  height: auto;
+  color: var(--darkblue);
+  background-color: var(--poppy);
+  margin: 20px;
+  font-size: 1.2em;
+  border: 0px;
   cursor: pointer;
-  text-align: center;
-  align-self: center;
-  margin: 0 auto;
-  display: block;
-  width: 20%;
-
-  &:hover {
-    color: #ffffff !important;
-    background: linear-gradient(var(--poppy), var(--poppy)), linear-gradient(white, white);
-    ${'' /* background: var(--poppy); */}
-    transition: all 0.4s ease 0s;
-  }
-
-  @media only screen and (max-width: 812px) {
-    /* For mobile phones: */
-    ${'' /* align-self: bottom; */}
-    width: 200px;
-  }
 `
-
-const text = `
-  every spring in the antelope valley, poppies bloom orange.\n
-  when it's sunny, they open up and reach towards the light.
-  when it's cloudy, they turn inwards.\n
-  it's usually nice to visit with a friend, but this year, we're left alone.\n
-  knowing this, the california parks department set up a webcam.\n
-  it's beautiful, but it's quiet.
-  so let's make some sound.\n
-  just like the poppies, the score here responds to its surroundings.\n
-  the more of us there are, the sunnier it becomes.\n
-`
-
 const About = (props) => {
-  if (!props.playState) {
+  console.log(props.playState)
+  if (props.playState) {
     return (
-      <Modal>
-        {/* <ReactMarkdown source={text} /><br></br> */}
-        <StartButton onClick={props.onClick}>start</StartButton>
-      </Modal>
+      <AboutPopUp
+        trigger={<AboutButton> about </AboutButton>}
+        modal
+        closeOnDocumentClick
+      >
+        <p>every spring in the antelope valley, poppies bloom orange.</p>
+        <p>when it's sunny, they open up and reach towards the light. when it's cloudy, they turn inwards.</p>
+        <p>it's usually nice to visit with a friend, but this year, we're left alone.</p>
+        <p>knowing this, the california parks department set up a webcam.</p>
+        <p>  it's beautiful, but it's quiet.</p>
+        <p>  just like the poppies, the score here responds to its surroundings.</p>
+        <p>the more of us there are, the sunnier it becomes.</p>
+        <br></br>
+        <p>design + dev by tristan friedberg rodman. sound by noah klein.</p>
+      </AboutPopUp>
     )
   }
   else {
@@ -75,4 +55,4 @@ const About = (props) => {
   }
 }
 
-export default About;
+export default About
