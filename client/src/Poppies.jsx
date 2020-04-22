@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Start from './Start'
 import About from './About'
 import VideoPlayer from './VideoPlayer'
 import Sockets from './Sockets'
@@ -36,8 +37,11 @@ export default class Poppies extends React.Component {
     const playState = this.state.started
     return (
       <Container>
-        <About
+        <Start
           onClick={this.handleClick}
+          playState={playState}
+        />
+        <About
           playState={playState}
         />
         <VideoPlayer 
