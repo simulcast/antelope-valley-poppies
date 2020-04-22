@@ -71,21 +71,21 @@ export default class TonePlayer extends React.Component {
     console.log(currUsers, prevUsers)
 
     if (currUsers === 1) {
-      Tone.Transport.start();
-      this.droneOsc1.start();
+      Tone.Transport.start('+.05');
+      this.droneOsc1.start('@16n');
       this.mod1.start();
     }
     if (currUsers === 1 && !increasing) {
       this.droneOsc2.stop();
     }
     if (currUsers === 2 && increasing) {
-      this.droneOsc2.start();
+      this.droneOsc2.start('@16n');
     }
     if (currUsers === 2 && !increasing) {
       this.droneOsc3.stop();
     }
     if (currUsers === 3 && increasing) {
-      this.droneOsc3.start();
+      this.droneOsc3.start('@16n');
     }
   }
 
