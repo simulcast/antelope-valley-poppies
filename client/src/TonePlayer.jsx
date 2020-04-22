@@ -62,30 +62,36 @@ export default class TonePlayer extends React.Component {
   componentDidUpdate() {
     const currUsers = this.props.currUsers
     const prevUsers = this.props.prevUsers
+    const playState = this.props.playState
     
+    /* variable to test if user count is increasing */
     let increasing
     if (currUsers > prevUsers) {
       increasing = true
     }
 
-    console.log(currUsers, prevUsers)
+    console.log(currUsers, prevUsers, playState)
 
-    if (currUsers === 1) {
-      Tone.Transport.start('+.05');
-      this.droneOsc1.start('@16n');
-      this.mod1.start();
-    }
-    if (currUsers === 1 && !increasing) {
-      this.droneOsc2.stop();
-    }
-    if (currUsers === 2 && increasing) {
-      this.droneOsc2.start('@16n');
-    }
-    if (currUsers === 2 && !increasing) {
-      this.droneOsc3.stop();
-    }
-    if (currUsers === 3 && increasing) {
-      this.droneOsc3.start('@16n');
+    /* if playState === true, then engage the sound on/off flow */
+
+    if (this.props.playState) {
+      if (currUsers === 1) {
+        Tone.Transport.start('+.05');
+        this.droneOsc1.start('@16n');
+        this.mod1.start();
+      }
+      if (currUsers === 1 && !increasing) {
+        this.droneOsc2.stop();
+      }
+      if (currUsers === 2 && increasing) {
+        this.droneOsc2.start('@16n');
+      }
+      if (currUsers === 2 && !increasing) {
+        this.droneOsc3.stop();
+      }
+      if (currUsers === 3 && increasing) {
+        this.droneOsc3.start('@16n');
+      }
     }
   }
 
