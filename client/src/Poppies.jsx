@@ -40,7 +40,9 @@ export default class Poppies extends React.Component {
           onClick={this.handleClick}
           playState={playState}
         />
-        <VideoPlayer/>
+        <VideoPlayer 
+          playState={playState}
+        />
         <Sockets 
           playState={playState}
         />
