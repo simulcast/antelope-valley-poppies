@@ -19,7 +19,7 @@ export default class Poppies extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      started: true
+      started: false
     }
 
     this.handleClick = this.handleClick.bind(this)
