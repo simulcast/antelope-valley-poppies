@@ -14,7 +14,7 @@ const CounterContainer = styled.div`
 `;
 
 const Counter = (props) => {
-  console.log(props.userCount)
+  // console.log(props.userCount)
   const userCount = props.userCount;
   let text;
   if (userCount === 1) {

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import About from './About'
 import VideoPlayer from './VideoPlayer'
-import TonePlayer from './TonePlayer'
 import Sockets from './Sockets'
 
 const Container = styled.div`
@@ -42,9 +41,6 @@ export default class Poppies extends React.Component {
           playState={playState}
         />
         <VideoPlayer/>
-        <TonePlayer 
-          playState={playState}
-        />
         <Sockets 
           playState={playState}
         />

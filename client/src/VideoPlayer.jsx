@@ -14,7 +14,7 @@ const VideoWrapper = styled.div`
 const VideoPlayer = () => {
   return(
     <VideoWrapper>
-      <Player fluid = {true}>
+      <Player autoPlay = {true} fluid = {true}>
         <HLSSource
           isVideoChild
           src="https://video.parks.ca.gov/PoppyReserve/Poppies.stream/playlist.m3u8"

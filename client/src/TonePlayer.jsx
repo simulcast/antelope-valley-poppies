@@ -7,7 +7,9 @@ export default class TonePlayer extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log(props.playState)
+    /* threshhold array */
+
+    this.thresh = [1, 2, 3, 15, 20, 25, 30];
 
     /* Tone.js */
 
@@ -57,18 +59,37 @@ export default class TonePlayer extends React.Component {
 
   }
 
-  componentWillUpdate() {
-    /* sequencing goes here */
-    Tone.Transport.start();
-    this.droneOsc1.start();
-    this.droneOsc2.start();
-    this.droneOsc3.start();
-    this.mod1.start();
+  componentDidUpdate() {
+    const currUsers = this.props.currUsers
+    const prevUsers = this.props.prevUsers
+    
+    let increasing
+    if (currUsers > prevUsers) {
+      increasing = true
+    }
+
+    console.log(currUsers, prevUsers)
+
+    if (currUsers === 1) {
+      Tone.Transport.start();
+      this.droneOsc1.start();
+      this.mod1.start();
+    }
+    if (currUsers === 1 && !increasing) {
+      this.droneOsc2.stop();
+    }
+    if (currUsers === 2 && increasing) {
+      this.droneOsc2.start();
+    }
+    if (currUsers === 2 && !increasing) {
+      this.droneOsc3.stop();
+    }
+    if (currUsers === 3 && increasing) {
+      this.droneOsc3.start();
+    }
   }
 
   render() {
-    return (
-      <div></div>
-    )
+    return null
   }
 }
