@@ -4,15 +4,16 @@ import ReactMarkdown from 'react-markdown';
 
 const Modal = styled.div`
   position: fixed;
+  display: flex;
   align-self: center;
-  z-index: 100;
+  justify-content: center;
+  z-index: 1;
   width: 50%;
-  height: 400px;
+  height: 200px;
   font-size: .75em;
   padding: 40px;
-  background: linear-gradient(var(--skyblue), var(--skyblue)), linear-gradient(white, white);
-  overflow: scroll;
-  filter: drop-shadow(15px 10px 5px white);
+  ${'' /* background: linear-gradient(var(--skyblue), var(--skyblue)), linear-gradient(white, white); */}
+  overflow: scroll;;
   font-weight: bold;
   color: var(--darkblue);
 `
@@ -27,16 +28,24 @@ const StartButton = styled.button`
   padding: 20px;
   display: inline-block;
   transition: all 0.4s ease 0s;
-
+  cursor: pointer;
   text-align: center;
+  align-self: center;
   margin: 0 auto;
   display: block;
   width: 20%;
 
   &:hover {
     color: #ffffff !important;
-    background: var(--poppy);
+    background: linear-gradient(var(--poppy), var(--poppy)), linear-gradient(white, white);
+    ${'' /* background: var(--poppy); */}
     transition: all 0.4s ease 0s;
+  }
+
+  @media only screen and (max-width: 812px) {
+    /* For mobile phones: */
+    ${'' /* align-self: bottom; */}
+    width: 200px;
   }
 `
 
@@ -56,17 +65,14 @@ const About = (props) => {
   if (!props.playState) {
     return (
       <Modal>
-        <ReactMarkdown source={text} /><br></br>
+        {/* <ReactMarkdown source={text} /><br></br> */}
         <StartButton onClick={props.onClick}>start</StartButton>
       </Modal>
     )
   }
   else {
-    return(
-      <div>hello world</div>
-    )
+    return null
   }
-
 }
 
 export default About;

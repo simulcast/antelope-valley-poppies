@@ -9,6 +9,10 @@ const VideoWrapper = styled.div`
   position: absolute;
   width: 80%;
   filter: drop-shadow(15px 10px 5px var(--poppy));
+  @media only screen and (max-width: 813px) {
+    /* For mobile phones: */
+    width: 70%;
+  }
 `;
 
 const VideoPlayer = () => {
