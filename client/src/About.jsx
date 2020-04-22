@@ -12,6 +12,11 @@ const AboutPopUp = styled(Popup)`
     width: 70% !important;
     background: linear-gradient(var(--skyblue), var(--skyblue)), linear-gradient(white, white) !important;
     border: 0px !important;
+    @media only screen and (max-width: 812px) {
+    /* For mobile phones: */
+      font-size: 0.5em;
+      padding: 20px !important;
+    }
   }
 `
 const AboutButton = styled.button`
@@ -28,6 +33,13 @@ const AboutButton = styled.button`
   font-size: 1.2em;
   border: 0px;
   cursor: pointer;
+  @media only screen and (max-width: 812px) {
+    /* For mobile phones: */
+    top: auto;
+    bottom: 0px;
+    width: auto;
+    height: auto;
+  }
 `
 const About = (props) => {
   console.log(props.playState)

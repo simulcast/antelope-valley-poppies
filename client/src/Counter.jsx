@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const CounterContainer = styled.div`
   position: fixed;
-  left: 20px;
+  left: 0px;
   top: 0px;
   width: auto;
   height: auto;
