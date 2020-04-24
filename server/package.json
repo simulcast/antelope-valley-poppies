@@ -13,7 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "inline-worker": "^1.1.0",
     "node": "^12.3.1",
+    "recorder-js": "^1.0.7",
+    "recorder.js": "^1.2.2",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {

@@ -1,5 +1,15 @@
 import React from 'react'
 import Tone from 'tone'
+import styled from 'styled-components'
+// import Recorder from 'recorder-js'
+import Recorder from './Recorder'
+
+/* this is where all the sound operations happen
+instantiates Tone.js and contains the RecordButton class 
+sound management happens kind of haphazardly for now,
+eventually it'd be great to manage with state
+also to manage whether or not the recordbutton shows by device / browser type
+*/
 
 const bpm = 80;
 
@@ -13,9 +23,10 @@ export default class TonePlayer extends React.Component {
 
     /* Tone.js */
 
-    Tone.Transport.bpm.value = bpm;
+    this.audioContext = new Tone.Context();
+    Tone.setContext(this.audioContext);
 
-    /* setting up sound sources */
+    Tone.Transport.bpm.value = bpm;
 
     this.droneNote1 = new Tone.Frequency("D4");
     this.droneNote2 = new Tone.Frequency("A4");
@@ -60,6 +71,8 @@ export default class TonePlayer extends React.Component {
   }
 
   componentDidUpdate() {
+    /* can we re-program this with state? */
+
     const currUsers = this.props.currUsers
     const prevUsers = this.props.prevUsers
     const playState = this.props.playState
@@ -70,13 +83,13 @@ export default class TonePlayer extends React.Component {
       increasing = true
     }
 
-    console.log(currUsers, prevUsers, playState)
+    // console.log(currUsers, prevUsers, playState)
 
     /* if playState === true, then engage the sound on/off flow */
 
-    if (this.props.playState) {
+    if (playState) {
       if (currUsers === 1) {
-        Tone.Transport.start('+.05');
+        Tone.Transport.start('+.05'); // delaying transport start helps with audio dropouts on mobile
         this.droneOsc1.start('@16n');
         this.mod1.start();
       }
@@ -96,6 +109,14 @@ export default class TonePlayer extends React.Component {
   }
 
   render() {
+    // return (
+    //   <Recorder
+    //     onClick={this.props.onClick}
+    //     playState={this.props.playState}
+    //     recordState={this.props.recordState}
+    //     context ={this.audioContext}
+    //   />
+    // )
     return null
   }
 }
