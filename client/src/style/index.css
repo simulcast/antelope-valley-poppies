@@ -26,3 +26,13 @@ body {
 .video-react-big-play-button {
     display: none !important;
 }
+
+a {
+    color: var(--darkblue);
+    background: var(--poppy);
+}
+
+.accent {
+    color: var(--darkblue);
+    background: var(--poppy); 
+}
