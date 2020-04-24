@@ -11,7 +11,7 @@ uses socket.io */
 const server = "https://antelope-valley-poppies.herokuapp.com"
 const local = "http://localhost:5000"
 
-const socket = io.connect(local)
+const socket = io.connect(server)
 
 export default class Sockets extends React.Component {
   constructor(props) {
