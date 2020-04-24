@@ -53,15 +53,14 @@ const About = (props) => {
         modal
         closeOnDocumentClick
       >
-        <p>every spring in the antelope valley, poppies bloom orange.</p>
+        <p><span class="accent">every spring in the antelope valley, poppies bloom orange.</span></p>
         <p>when it's sunny, they open up and reach towards the light. when it's cloudy, they turn inwards.</p>
         <p>it's usually nice to visit with a friend, but this year, we're left alone.</p>
-        <p>knowing this, the california parks department set up a webcam.</p>
-        <p>  it's beautiful, but it's quiet.</p>
-        <p>  just like the poppies, the score here responds to its surroundings.</p>
+        <p>knowing this, the california parks department set up a webcam. it's beautiful, but it's quiet.</p>
+        <p><span class="accent">just like the poppies, the score here responds to its surroundings.</span></p>
         <p>the more of us there are, the sunnier it becomes.</p>
         <br></br>
-        <p>design + dev by tristan friedberg rodman. sound by noah klein.</p>
+        <p>design + dev by <a href="https://tristanfriedbergrodman.com" rel="noopener noreferrer" target="_blank">tristan friedberg rodman</a>. sound by <a href="https://nevercontent.org/" rel="noopener noreferrer" target="_blank">noah klein</a>.</p>
       </AboutPopUp>
     )
   }
