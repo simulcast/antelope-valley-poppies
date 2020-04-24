@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import Start from './Start'
 import About from './About'
 import VideoPlayer from './VideoPlayer'
@@ -26,12 +26,14 @@ export default class Poppies extends React.Component {
     super(props)
     this.state = {
       started: false,
-      recording: false
+      recording: false,
+      loading: true
     }
 
     /* method bindings */
     this.startClick = this.startClick.bind(this)
     this.recordClick = this.recordClick.bind(this)
+    this.onLoad = this.onLoad.bind(this)
 
   }
   
@@ -39,7 +41,8 @@ export default class Poppies extends React.Component {
   startClick() {
     this.setState({
       started: true,
-      recording: false
+      recording: this.state.recording,
+      loading: this.state.loading
     })
   }
 
@@ -47,26 +50,38 @@ export default class Poppies extends React.Component {
   recordClick() {
     if (this.state.recording === false) {
       this.setState({
-        started: true,
-        recording: true
+        started: this.state.started,
+        recording: true,
+        loading: this.state.loading
       })
     }
     else if (this.state.recording === true) {
       this.setState({
-        started: true,
-        recording: false
+        started: this.state.started,
+        recording: false,
+        loading: this.state.loading
       })
     }
+  }
+
+  onLoad() {
+    this.setState({
+      started: this.state.started,
+      recording: this.state.recording,
+      loading: false
+    }, console.log(this.state.loading))
   }
 
   render() {
     const playState = this.state.started
     const recordState = this.state.recording
+    const loadState = this.state.loading
     return (
       <Container>
         <Start
           onClick={this.startClick}
           playState={playState}
+          loadState={loadState}
         />
         <About
           playState={playState}
@@ -76,7 +91,9 @@ export default class Poppies extends React.Component {
         />
         <Sockets
           onClick={this.recordClick}
+          onLoad={this.onLoad}
           playState={playState}
+          loadState={loadState}
           recordState={recordState}
         />
       </Container>
