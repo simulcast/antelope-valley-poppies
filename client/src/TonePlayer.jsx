@@ -11,6 +11,31 @@ eventually it'd be great to manage with state
 also to manage whether or not the recordbutton shows by device / browser type
 */
 
+const LoadButton = styled.button`
+  z-index: 200;
+  background: linear-gradient(var(--darkblue), var(--darkblue)), linear-gradient(white, white);
+  font-family: "Space Mono", monospace;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+  transition: all 0.4s ease 0s;
+  text-align: center;
+  align-self: center;
+  margin: 0 auto;
+  display: block;
+  width: 20%;
+  border: 0px;
+
+  @media only screen and (max-width: 812px) {
+    /* For mobile phones: */
+    ${'' /* align-self: bottom; */}
+    width: 200px;
+  }
+`
+
 const bpm = 80;
 
 export default class TonePlayer extends React.Component {
@@ -23,13 +48,27 @@ export default class TonePlayer extends React.Component {
 
     /* Tone.js */
 
+    /* mkdir mp3 ogg webm; for i in *.wav; do ffmpeg -i "$i" -b:a 320000 "./mp3/${i%.*}.mp3" -b:a 320000 "./ogg/${i%.*}.ogg" "./flac/${i%.*}.flac"; done
+    batch converts wavs to diff formats */
+
     this.audioContext = new Tone.Context();
     Tone.setContext(this.audioContext);
 
     Tone.Transport.bpm.value = bpm;
 
-    this.droneNote1 = new Tone.Frequency("D4");
-    this.droneNote2 = new Tone.Frequency("A4");
+    this.sounds = new Tone.Players({
+      "root1" : "./sounds/ogg/root1.ogg",
+      "root2" : "./sounds/ogg/root2.ogg",
+      "root3" : "./sounds/ogg/root3.ogg",
+      "melody1" : "./sounds/ogg/melody1.ogg",
+      "melody2" : "./sounds/ogg/melody1.ogg",
+      "melody3" : "./sounds/ogg/melody1.ogg",
+      "melody4" : "./sounds/ogg/melody1.ogg",
+      "fifth1" : "./sounds/ogg/fifth1.ogg"
+    }, () => this.loadCall()
+    ).toMaster()
+    this.sounds.fadeOut = "@16n"
+    this.sounds.fadeIn = "@16n"
 
     this.reverb = new Tone.Reverb({
       decay: 2.5,
@@ -47,27 +86,11 @@ export default class TonePlayer extends React.Component {
       playbackRate : 1,
     }).connect(this.lowpass);
     this.droneOsc1.volume.value = -16;
+  }
 
-    this.droneOsc2 = new Tone.Oscillator({
-      type : "sine" ,
-      frequency : this.droneNote1 ,
-      detune : +10 ,
-      phase : 0 ,
-      partials : [] ,
-      partialCount : 0
-    }).connect(this.lowpass);
-    this.droneOsc2.volume.value = -8;
-
-    this.droneOsc3 = new Tone.Oscillator({
-      type : "sine" ,
-      frequency : this.droneNote2 ,
-      detune : -10 ,
-      phase : 0 ,
-      partials : [] ,
-      partialCount : 0
-    }).connect(this.lowpass);
-    this.droneOsc3.volume.value = -8;
-
+  loadCall() {
+    console.log('buffers loaded')
+    this.props.onLoad()
   }
 
   componentDidUpdate() {
@@ -88,27 +111,61 @@ export default class TonePlayer extends React.Component {
     /* if playState === true, then engage the sound on/off flow */
 
     if (playState) {
+      Tone.Transport.start('+.05'); // delaying transport start helps with audio dropouts on mobile
+      this.droneOsc1.start('@16n');
+      this.mod1.start();
       if (currUsers === 1) {
-        Tone.Transport.start('+.05'); // delaying transport start helps with audio dropouts on mobile
-        this.droneOsc1.start('@16n');
-        this.mod1.start();
+
       }
       if (currUsers === 1 && !increasing) {
-        this.droneOsc2.stop();
+        this.sounds.get("root1").stop("@16n");
       }
       if (currUsers === 2 && increasing) {
-        this.droneOsc2.start('@16n');
+        this.sounds.get("root1").loop = true; 
+        this.sounds.get("root1").start("@16n");
       }
       if (currUsers === 2 && !increasing) {
-        this.droneOsc3.stop();
+        this.sounds.get("melody1").stop("@16n");
       }
       if (currUsers === 3 && increasing) {
-        this.droneOsc3.start('@16n');
+        this.sounds.get("melody1").loop = true; 
+        this.sounds.get("melody1").start("@16n");
+      }
+      if (currUsers === 3 && !increasing) {
+        this.sounds.get("melody2").stop("@16n");
+      }
+      if (currUsers === 4 && increasing) {
+        this.sounds.get("melody2").loop = true; 
+        this.sounds.get("melody2").start("@16n");
+      }
+      if (currUsers === 4 && !increasing) {
+        this.sounds.get("melody3").stop("@16n");
+      }
+      if (currUsers === 5 && increasing) {
+        this.sounds.get("melody3").loop = true; 
+        this.sounds.get("melody3").start("@16n");
+      }
+      if (currUsers === 5 && !increasing) {
+        this.sounds.get("melody4").stop("@16n");
+      }
+      if (currUsers === 6 && increasing) {
+        this.sounds.get("melody4").loop = true; 
+        this.sounds.get("melody4").start("@16n");
       }
     }
   }
 
   render() {
+    if (this.props.loadState === true) {
+      console.log('rendering true ' + this.props.loadState)
+      return (
+        <LoadButton>loading...</LoadButton>
+      )
+    }
+    else if (this.props.loadState === false) {
+      console.log('rendering false' + this.props.loadState)
+      return null
+    }
     // return (
     //   <Recorder
     //     onClick={this.props.onClick}

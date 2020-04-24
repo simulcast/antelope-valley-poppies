@@ -54,7 +54,7 @@ const StartButton = styled.button`
 `
 
 const Start = (props) => {
-  if (!props.playState) {
+  if (!props.playState && !props.loadState) {
     return (
       <StartContainer>
         <StartButton onClick={props.onClick}>start</StartButton>

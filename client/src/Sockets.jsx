@@ -47,9 +47,12 @@ export default class Sockets extends React.Component {
   render() {
     const playState = this.props.playState
     const recordState = this.props.recordState
+    const loadState = this.props.loadState
+    const onLoad = this.props.onLoad
     const currUsers = this.state.currUsers
     const prevUsers = this.state.prevUsers
     const onClick = this.props.onClick
+
     return (
       <React.Fragment>
         <Counter 
@@ -59,6 +62,8 @@ export default class Sockets extends React.Component {
         <TonePlayer 
           playState = {playState}
           recordState = {recordState}
+          loadState = {loadState}
+          onLoad = {onLoad}
           currUsers = {currUsers}
           prevUsers = {prevUsers}
           onClick = {onClick}
