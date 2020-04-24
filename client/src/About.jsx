@@ -2,6 +2,9 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 
+/* this class is for the about modal, which uses the reactjs-popup plug-in
+its render is conditional on playState, so that it only appears after start */
+
 const AboutPopUp = styled(Popup)`
   &-overlay {
   }
@@ -42,7 +45,7 @@ const AboutButton = styled.button`
   }
 `
 const About = (props) => {
-  console.log(props.playState)
+  // console.log(props.playState)
   if (props.playState) {
     return (
       <AboutPopUp

@@ -5,6 +5,11 @@ import About from './About'
 import VideoPlayer from './VideoPlayer'
 import Sockets from './Sockets'
 
+/* this is the main class
+it keeps track of whether the app has started and
+whether recording is engaged via its state
+*/
+
 const Container = styled.div`
   position: absolute;
   display: flex;
@@ -20,25 +25,47 @@ export default class Poppies extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      started: false
+      started: false,
+      recording: false
     }
 
-    this.handleClick = this.handleClick.bind(this)
+    /* method bindings */
+    this.startClick = this.startClick.bind(this)
+    this.recordClick = this.recordClick.bind(this)
 
   }
-
-  handleClick() {
+  
+  /* called when user clicks start button */
+  startClick() {
     this.setState({
-      started: true
+      started: true,
+      recording: false
     })
+  }
+
+  /* called when user clicks record button */
+  recordClick() {
+    if (this.state.recording === false) {
+      this.setState({
+        started: true,
+        recording: true
+      })
+    }
+    else if (this.state.recording === true) {
+      this.setState({
+        started: true,
+        recording: false
+      })
+    }
   }
 
   render() {
     const playState = this.state.started
+    const recordState = this.state.recording
     return (
       <Container>
         <Start
-          onClick={this.handleClick}
+          onClick={this.startClick}
           playState={playState}
         />
         <About
@@ -47,8 +74,10 @@ export default class Poppies extends React.Component {
         <VideoPlayer 
           playState={playState}
         />
-        <Sockets 
+        <Sockets
+          onClick={this.recordClick}
           playState={playState}
+          recordState={recordState}
         />
       </Container>
     )
