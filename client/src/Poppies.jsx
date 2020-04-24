@@ -1,9 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import Start from './Start'
 import About from './About'
 import VideoPlayer from './VideoPlayer'
 import Sockets from './Sockets'
+
+/* this is the main class
+it keeps track of whether the app has started and
+whether recording is engaged via its state
+*/
 
 const Container = styled.div`
   position: absolute;
@@ -20,26 +25,63 @@ export default class Poppies extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      started: false
+      started: false,
+      recording: false,
+      loading: true
     }
 
-    this.handleClick = this.handleClick.bind(this)
+    /* method bindings */
+    this.startClick = this.startClick.bind(this)
+    this.recordClick = this.recordClick.bind(this)
+    this.onLoad = this.onLoad.bind(this)
 
   }
-
-  handleClick() {
+  
+  /* called when user clicks start button */
+  startClick() {
     this.setState({
-      started: true
+      started: true,
+      recording: this.state.recording,
+      loading: this.state.loading
     })
+  }
+
+  /* called when user clicks record button */
+  recordClick() {
+    if (this.state.recording === false) {
+      this.setState({
+        started: this.state.started,
+        recording: true,
+        loading: this.state.loading
+      })
+    }
+    else if (this.state.recording === true) {
+      this.setState({
+        started: this.state.started,
+        recording: false,
+        loading: this.state.loading
+      })
+    }
+  }
+
+  onLoad() {
+    this.setState({
+      started: this.state.started,
+      recording: this.state.recording,
+      loading: false
+    }, console.log(this.state.loading))
   }
 
   render() {
     const playState = this.state.started
+    const recordState = this.state.recording
+    const loadState = this.state.loading
     return (
       <Container>
         <Start
-          onClick={this.handleClick}
+          onClick={this.startClick}
           playState={playState}
+          loadState={loadState}
         />
         <About
           playState={playState}
@@ -47,8 +89,12 @@ export default class Poppies extends React.Component {
         <VideoPlayer 
           playState={playState}
         />
-        <Sockets 
+        <Sockets
+          onClick={this.recordClick}
+          onLoad={this.onLoad}
           playState={playState}
+          loadState={loadState}
+          recordState={recordState}
         />
       </Container>
     )

@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Modal = styled.div`
+/* this is the start button class
+it inherits the startClick() method from Poppies as a prop
+render is conditional on playState, so that when we start playing the button disappears */
+
+const StartContainer = styled.div`
   position: fixed;
   display: flex;
   align-self: center;
@@ -50,11 +54,11 @@ const StartButton = styled.button`
 `
 
 const Start = (props) => {
-  if (!props.playState) {
+  if (!props.playState && !props.loadState) {
     return (
-      <Modal>
+      <StartContainer>
         <StartButton onClick={props.onClick}>start</StartButton>
-      </Modal>
+      </StartContainer>
     )
   }
   else {

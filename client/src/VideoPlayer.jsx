@@ -4,6 +4,10 @@ import HLSSource from './HLSSource'
 import styled from 'styled-components';
 import "../node_modules/video-react/dist/video-react.css";
 
+/* a wrapper for the video stream of the poppies
+uses video-react to stream in the video, HLSSource
+to specify the livestream protocol */
+
 
 const VideoWrapper = styled.div`
   position: absolute;
@@ -18,9 +22,10 @@ const VideoWrapper = styled.div`
 export default class VideoPlayer extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.play = this.play.bind(this);
+    this.play = this.play.bind(this); // binding so that ref works
   }
 
+  /* play method so that we can control media start */
   play() {
     this.player.play();
   }
@@ -40,7 +45,7 @@ export default class VideoPlayer extends React.Component {
           fluid = {true}
           ref={player => {
             this.player = player;
-          }}
+          }} // ref so that we can call play on the class itself
         >
           <HLSSource
             isVideoChild
