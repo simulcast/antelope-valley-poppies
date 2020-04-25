@@ -60,7 +60,7 @@ const About = (props) => {
         <p><span class="accent">just like the poppies, the sounds here respond to their surroundings.</span></p>
         <p>the more of us there are, the less desolate it becomes.</p>
         <br></br>
-        <p>design + dev by <a href="https://tristanfriedbergrodman.com" rel="noopener noreferrer" target="_blank">tristan friedberg rodman</a>. sounds by <a href="https://nevercontent.org/" rel="noopener noreferrer" target="_blank">noah klein</a>.</p>
+        <p>design + dev by <a href="https://tristanfriedbergrodman.com" rel="noopener noreferrer" target="_blank">tristan friedberg rodman</a>. sounds by <a href="https://twitter.com/cuddleformation" rel="noopener noreferrer" target="_blank">noah klein</a>.</p>
       </AboutPopUp>
     )
   }
