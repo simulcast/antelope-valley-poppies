@@ -57,18 +57,18 @@ export default class TonePlayer extends React.Component {
     Tone.Transport.bpm.value = bpm;
 
     this.sounds = new Tone.Players({
-      "root1" : "./sounds/ogg/root1.ogg",
-      "root2" : "./sounds/ogg/root2.ogg",
-      "root3" : "./sounds/ogg/root3.ogg",
-      "melody1" : "./sounds/ogg/melody1.ogg",
-      "melody2" : "./sounds/ogg/melody1.ogg",
-      "melody3" : "./sounds/ogg/melody1.ogg",
-      "melody4" : "./sounds/ogg/melody1.ogg",
-      "fifth1" : "./sounds/ogg/fifth1.ogg"
+      "root1" : "./sounds/mp3/root1.mp3",
+      "root2" : "./sounds/mp3/root2.mp3",
+      "root3" : "./sounds/mp3/root3.mp3",
+      "melody1" : "./sounds/mp3/melody1.mp3",
+      "melody2" : "./sounds/mp3/melody1.mp3",
+      "melody3" : "./sounds/mp3/melody1.mp3",
+      "melody4" : "./sounds/mp3/melody1.mp3",
+      "fifth1" : "./sounds/mp3/fifth1.mp3"
     }, () => this.loadCall()
     ).toMaster()
-    this.sounds.fadeOut = "@16n"
-    this.sounds.fadeIn = "@16n"
+    this.sounds.fadeOut = "4n"
+    // this.sounds.fadeIn = "@16n"
 
     this.reverb = new Tone.Reverb({
       decay: 2.5,
@@ -157,7 +157,6 @@ export default class TonePlayer extends React.Component {
 
   render() {
     if (this.props.loadState === true) {
-      console.log('rendering true ' + this.props.loadState)
       return (
         <LoadButton>loading...</LoadButton>
       )
