@@ -69,7 +69,7 @@ export default class Poppies extends React.Component {
       started: this.state.started,
       recording: this.state.recording,
       loading: false
-    }, console.log(this.state.loading))
+    })
   }
 
   render() {
