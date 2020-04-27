@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import RecorderJS from './utilities/recorder.js'
 import download from 'downloadjs'
 import AudioRecorder from 'audio-recorder-polyfill'
 
