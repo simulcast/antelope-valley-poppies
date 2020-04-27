@@ -13,6 +13,7 @@ html {
     --poppy: rgba(255, 108, 47, 0.75);
     --darkblue: rgba(35, 91, 168, 1);
     --modal-bg:  rgba(98, 168, 229, 1.0);
+    background: linear-gradient(var(--skyblue-plus), var(--skyblue));
 }
 
 body {
@@ -21,6 +22,7 @@ body {
     font-family: 'Space Mono', monospace;
     font-weight: 700;
     font-size: 20px;
+    background: linear-gradient(var(--skyblue-plus), var(--skyblue));
 }
 
 .video-react-big-play-button {
