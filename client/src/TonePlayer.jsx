@@ -66,9 +66,9 @@ export default class TonePlayer extends React.Component {
       "root2" : "./sounds/mp3/root2.mp3",
       "root3" : "./sounds/mp3/root3.mp3",
       "melody1" : "./sounds/mp3/melody1.mp3",
-      "melody2" : "./sounds/mp3/melody1.mp3",
-      "melody3" : "./sounds/mp3/melody1.mp3",
-      "melody4" : "./sounds/mp3/melody1.mp3",
+      "melody2" : "./sounds/mp3/melody2.mp3",
+      "melody3" : "./sounds/mp3/melody3.mp3",
+      "melody4" : "./sounds/mp3/melody4.mp3",
       "fifth1" : "./sounds/mp3/fifth1.mp3"
     }, () => this.loadCall()
     ).connect(this.masterBus)
@@ -114,6 +114,8 @@ export default class TonePlayer extends React.Component {
     // console.log(currUsers, prevUsers, playState)
 
     /* if playState === true, then engage the sound on/off flow */
+
+    /* sound feedback — make interesting events happen at 1 to 2, 2 to 3, 3 to 4 */
 
     if (playState) {
       Tone.Transport.start('+.05'); // delaying transport start helps with audio dropouts on mobile
