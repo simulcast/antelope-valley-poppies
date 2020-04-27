@@ -42,35 +42,22 @@ export default class Recorder extends React.Component {
     // window.MediaRecorder = AudioRecorder
     this.startRecord = this.startRecording.bind(this);
     this.stopRecord = this.stopRecording.bind(this);
-    // console.log(this.props.audioContext)
-    // console.log(this.props.masterBus)
-    // console.log(this.props.recordDest.stream)
     this.recorder = new MediaRecorder(this.props.recordDest.stream);
     this.chunks = [];
-
-    
-    // this.recorder = new RecorderJS(this.props.masterBus) //mess around with this maybe? in an old prototype it used createGain(); you don't pass it the context - you pass it the gain node!
   }
 
   startRecording() {
-    // this.recorder.record()
     this.recorder.start()
     this.recorder.ondataavailable = evt => this.chunks.push(evt.data);
   }
    
   async stopRecording() {
-    console.log('stop recording')
     this.recorder.stop()
     this.recorder.onstop = evt => {
       let blob = new Blob(this.chunks, { type: 'audio/ogg; codecs=opus' });
       console.log(blob)
       download(blob, "export.ogg", "audio/ogg");
     };
-    // audio.src = URL.createObjectURL(blob);
-    // this.recorder.exportWAV(function(blob){
-      // // console.log(blob);
-      // download(blob, "export.wav", "audio/wav");
-    // });
   }
 
   /* conditional render */

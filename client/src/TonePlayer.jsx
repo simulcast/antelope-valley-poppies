@@ -51,10 +51,13 @@ export default class TonePlayer extends React.Component {
     /* mkdir mp3 ogg webm; for i in *.wav; do ffmpeg -i "$i" -b:a 320000 "./mp3/${i%.*}.mp3" -b:a 320000 "./ogg/${i%.*}.ogg" "./flac/${i%.*}.flac"; done
     batch converts wavs to diff formats */
 
+
+    /* set this up so that it can be sent along to recorder
+    we use a masterbus here! */
     this.audioContext = new Tone.Context()
     Tone.setContext(this.audioContext)
-    this.recordDest = this.audioContext.createMediaStreamDestination()
-    this.masterBus = new Tone.Gain().connect(this.recordDest).toMaster()
+    this.recordDest = this.audioContext.createMediaStreamDestination() // this is how we make a media stream to record
+    this.masterBus = new Tone.Gain().connect(this.recordDest).toMaster() // and this is how we feed it the master bus, simultaneously hooking it to speakers
 
     Tone.Transport.bpm.value = bpm;
 
@@ -170,8 +173,6 @@ export default class TonePlayer extends React.Component {
           onClick={this.props.onClick}
           playState={this.props.playState}
           recordState={this.props.recordState}
-          audioContext ={this.audioContext}
-          masterBus={this.masterBus}
           recordDest={this.recordDest}
         />
       )
