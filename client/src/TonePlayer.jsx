@@ -51,8 +51,10 @@ export default class TonePlayer extends React.Component {
     /* mkdir mp3 ogg webm; for i in *.wav; do ffmpeg -i "$i" -b:a 320000 "./mp3/${i%.*}.mp3" -b:a 320000 "./ogg/${i%.*}.ogg" "./flac/${i%.*}.flac"; done
     batch converts wavs to diff formats */
 
-    this.audioContext = new Tone.Context();
-    Tone.setContext(this.audioContext);
+    this.audioContext = new Tone.Context()
+    Tone.setContext(this.audioContext)
+    this.recordDest = this.audioContext.createMediaStreamDestination()
+    this.masterBus = new Tone.Gain().connect(this.recordDest).toMaster()
 
     Tone.Transport.bpm.value = bpm;
 
@@ -66,14 +68,14 @@ export default class TonePlayer extends React.Component {
       "melody4" : "./sounds/mp3/melody1.mp3",
       "fifth1" : "./sounds/mp3/fifth1.mp3"
     }, () => this.loadCall()
-    ).toMaster()
+    ).connect(this.masterBus)
     this.sounds.fadeOut = "4n"
     // this.sounds.fadeIn = "@16n"
 
     this.reverb = new Tone.Reverb({
       decay: 2.5,
       preDelay: 0.02
-    }).toMaster();
+    }).connect(this.masterBus);
     this.reverb.generate();
 
     this.lowpass = new Tone.Filter(800, "lowpass", -12).connect(this.reverb);
@@ -163,16 +165,19 @@ export default class TonePlayer extends React.Component {
     }
     else if (this.props.loadState === false) {
       console.log('rendering false' + this.props.loadState)
-      return null
+      return (
+        <Recorder
+          onClick={this.props.onClick}
+          playState={this.props.playState}
+          recordState={this.props.recordState}
+          audioContext ={this.audioContext}
+          masterBus={this.masterBus}
+          recordDest={this.recordDest}
+        />
+      )
+      // return null
     }
-    // return (
-    //   <Recorder
-    //     onClick={this.props.onClick}
-    //     playState={this.props.playState}
-    //     recordState={this.props.recordState}
-    //     context ={this.audioContext}
-    //   />
-    // )
-    return null
+
+    // return null
   }
 }
