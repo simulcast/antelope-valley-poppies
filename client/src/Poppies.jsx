@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import styled from 'styled-components'
 import Start from './Start'
 import About from './About'
 import VideoPlayer from './VideoPlayer'
