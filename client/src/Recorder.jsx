@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import download from 'downloadjs'
-import lamejs from 'lamejs'
-import FileReader from 'filereader'
-// import AudioRecorder from 'audio-recorder-polyfill'
+import AudioRecorder from 'audio-recorder-polyfill'
+import mpegEncoder from 'audio-recorder-polyfill/mpeg-encoder'
 
 const RecordButton = styled.button`
   font-family: 'Space Mono';
@@ -42,29 +41,33 @@ export default class Recorder extends React.Component {
     super(props)
     this.startRecord = this.startRecording.bind(this);
     this.stopRecord = this.stopRecording.bind(this);
-    this.recorder = new MediaRecorder(this.props.recordDest.stream);
+
+    /* use the Audio Recorder polyfill so that we can do mp3 encoding, Safari support */
+    AudioRecorder.encoder = mpegEncoder
+    AudioRecorder.prototype.mimeType = 'audio/mpeg'
+    window.MediaRecorder = AudioRecorder
+    this.recorder = new AudioRecorder(this.props.recordDest.stream)
+
     this.chunks = [];
   }
 
   startRecording() {
     this.recorder.start()
-    this.recorder.ondataavailable = evt => this.chunks.push(evt.data);
+    this.recorder.addEventListener('dataavailable', evt => {
+      console.log('listening')
+      this.chunks.push(evt.data)
+    })
   }
    
   async stopRecording() {
     this.recorder.stop()
-    this.recorder.onstop = evt => {
-      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-        let blob = new Blob(this.chunks, { type: 'audio/webm; codecs=opus' })
-        console.log(blob)
-        download(blob, "export.webm", "audio/webm")
-      }
-      else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
-        let blob = new Blob(this.chunks, { type: 'wudio/ogg; codecs=opus'})
-        console.log(blob)
-        download(blob, "export.ogg", "audio/ogg")
-      }
-    };
+    this.recorder.addEventListener('stop', evt => {
+      console.log('stopped')
+      let blob = new Blob(this.chunks, { type: 'audio/mpeg' })
+      console.log(blob)
+      download(blob, "watching-the-poppies-export.mp3", "audio/mpeg")
+      // this.chunks = [] // reset chunks
+    })
   }
 
   /* conditional render */
