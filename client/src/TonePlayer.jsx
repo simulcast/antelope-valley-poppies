@@ -167,7 +167,6 @@ export default class TonePlayer extends React.Component {
       )
     }
     else if (this.props.loadState === false) {
-      console.log('rendering false' + this.props.loadState)
       return (
         <Recorder
           onClick={this.props.onClick}

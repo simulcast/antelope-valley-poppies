@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import download from 'downloadjs'
-import AudioRecorder from 'audio-recorder-polyfill'
+import lamejs from 'lamejs'
+import FileReader from 'filereader'
+// import AudioRecorder from 'audio-recorder-polyfill'
 
 const RecordButton = styled.button`
   font-family: 'Space Mono';
@@ -38,7 +40,6 @@ https://github.com/ai/audio-recorder-polyfill
 export default class Recorder extends React.Component {
   constructor(props) {
     super(props)
-    // window.MediaRecorder = AudioRecorder
     this.startRecord = this.startRecording.bind(this);
     this.stopRecord = this.stopRecording.bind(this);
     this.recorder = new MediaRecorder(this.props.recordDest.stream);
@@ -53,9 +54,16 @@ export default class Recorder extends React.Component {
   async stopRecording() {
     this.recorder.stop()
     this.recorder.onstop = evt => {
-      let blob = new Blob(this.chunks, { type: 'audio/ogg; codecs=opus' });
-      console.log(blob)
-      download(blob, "export.ogg", "audio/ogg");
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        let blob = new Blob(this.chunks, { type: 'audio/webm; codecs=opus' })
+        console.log(blob)
+        download(blob, "export.webm", "audio/webm")
+      }
+      else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+        let blob = new Blob(this.chunks, { type: 'wudio/ogg; codecs=opus'})
+        console.log(blob)
+        download(blob, "export.ogg", "audio/ogg")
+      }
     };
   }
 
