@@ -42,6 +42,13 @@ export default class TonePlayer extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      currUsers: this.props.currUsers,
+      prevUsers: this.props.prevUsers
+    }
+
+    console.log(this.state.currUsers)
+
     /* threshhold array */
 
     this.thresh = [1, 2, 3, 15, 20, 25, 30];
@@ -50,7 +57,6 @@ export default class TonePlayer extends React.Component {
 
     /* mkdir mp3 ogg webm; for i in *.wav; do ffmpeg -i "$i" -b:a 320000 "./mp3/${i%.*}.mp3" -b:a 320000 "./ogg/${i%.*}.ogg" "./flac/${i%.*}.flac"; done
     batch converts wavs to diff formats */
-
 
     /* set this up so that it can be sent along to recorder
     we use a masterbus here! */
@@ -61,19 +67,8 @@ export default class TonePlayer extends React.Component {
 
     Tone.Transport.bpm.value = bpm;
 
-    this.sounds = new Tone.Players({
-      "root1" : "./sounds/mp3/root1.mp3",
-      "root2" : "./sounds/mp3/root2.mp3",
-      "root3" : "./sounds/mp3/root3.mp3",
-      "melody1" : "./sounds/mp3/melody1.mp3",
-      "melody2" : "./sounds/mp3/melody2.mp3",
-      "melody3" : "./sounds/mp3/melody3.mp3",
-      "melody4" : "./sounds/mp3/melody4.mp3",
-      "fifth1" : "./sounds/mp3/fifth1.mp3"
-    }, () => this.loadCall()
-    ).connect(this.masterBus)
-    this.sounds.fadeOut = "4n"
-    // this.sounds.fadeIn = "@16n"
+    this.sounds = [] // empty array into which we'll load Tone.Player objects 
+    this.max = 10
 
     this.reverb = new Tone.Reverb({
       decay: 2.5,
@@ -91,6 +86,8 @@ export default class TonePlayer extends React.Component {
       playbackRate : 1,
     }).connect(this.lowpass);
     this.droneOsc1.volume.value = -16;
+
+    this.loadCall(); // simulate load call
   }
 
   loadCall() {
@@ -115,50 +112,40 @@ export default class TonePlayer extends React.Component {
 
     /* if playState === true, then engage the sound on/off flow */
 
-    /* sound feedback — make interesting events happen at 1 to 2, 2 to 3, 3 to 4 */
-
     if (playState) {
       Tone.Transport.start('+.05'); // delaying transport start helps with audio dropouts on mobile
       this.droneOsc1.start('@16n');
       this.mod1.start();
-      if (currUsers === 1) {
 
+      if (increasing) {
+        for (let i = 1; i < currUsers; i++) {
+          if (this.sounds[i] === undefined)  { // if the slot is empty
+            this.sounds[i] = new Tone.Player('./sounds/ordered/' + i + '.mp3', () => { // load in a sound
+              // this.sounds[i].volume = -6
+              this.sounds[i].loop = true // make sure it loops
+              this.sounds[i].start("@16n") // and start it on the nearest 16th note
+            }).connect(this.reverb) // connect to the reverb node
+          }
+          else if (i <= this.max) { // if there's already a sound
+            this.sounds[i].volume.rampTo(-6, "2n") // bring the volume back up
+          }
+          else { // if the slot is full but it
+            console.log('err!')
+          }
+        }
       }
-      if (currUsers === 1 && !increasing) {
-        this.sounds.get("root1").stop("@16n");
+
+      else if (!increasing) {
+        if (currUsers >= 1) { // if the usercount is decreasing, 
+          this.sounds[currUsers].volume.rampTo(-Infinity, "2n") // bring the volume on that sound down
+        }
       }
-      if (currUsers === 2 && increasing) {
-        this.sounds.get("root1").loop = true; 
-        this.sounds.get("root1").start("@16n");
+      else {
+        console.log('err!')
       }
-      if (currUsers === 2 && !increasing) {
-        this.sounds.get("melody1").stop("@16n");
-      }
-      if (currUsers === 3 && increasing) {
-        this.sounds.get("melody1").loop = true; 
-        this.sounds.get("melody1").start("@16n");
-      }
-      if (currUsers === 3 && !increasing) {
-        this.sounds.get("melody2").stop("@16n");
-      }
-      if (currUsers === 4 && increasing) {
-        this.sounds.get("melody2").loop = true; 
-        this.sounds.get("melody2").start("@16n");
-      }
-      if (currUsers === 4 && !increasing) {
-        this.sounds.get("melody3").stop("@16n");
-      }
-      if (currUsers === 5 && increasing) {
-        this.sounds.get("melody3").loop = true; 
-        this.sounds.get("melody3").start("@16n");
-      }
-      if (currUsers === 5 && !increasing) {
-        this.sounds.get("melody4").stop("@16n");
-      }
-      if (currUsers === 6 && increasing) {
-        this.sounds.get("melody4").loop = true; 
-        this.sounds.get("melody4").start("@16n");
-      }
+    }
+    else {
+      console.log('too many users - doing nothing')
     }
   }
 
