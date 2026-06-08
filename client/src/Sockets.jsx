@@ -7,11 +7,7 @@ import TonePlayer from './TonePlayer'
 contains the Counter and TonePlayer classes
 uses socket.io */
 
-/* store SERVER variable in config var with URL of server. ex. https://appname.herokuapp.com */
-const server = "https://antelope-valley-poppies.herokuapp.com"
-const local = "http://localhost:5000"
-
-const socket = io.connect(server)
+const socket = io()
 
 export default class Sockets extends React.Component {
   constructor(props) {

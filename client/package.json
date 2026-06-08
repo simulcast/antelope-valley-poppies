@@ -12,10 +12,10 @@
     "inline-worker": "^1.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "reactjs-popup": "^1.5.0",
     "save": "^2.4.0",
-    "socket.io": "^2.3.0",
+    "socket.io-client": "^4.7.0",
     "styled-components": "^5.1.0",
     "tone": "^13.8.25",
     "video-react": "^0.14.1"

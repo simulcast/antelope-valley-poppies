@@ -2,7 +2,11 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  cors: process.env.CORS_ORIGIN
+    ? { origin: process.env.CORS_ORIGIN, methods: ["GET", "POST"] }
+    : {}
+});
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Listen on *: ${PORT}`));
@@ -13,8 +17,7 @@ let userCount = 0;
 
 io.on("connection", socket => {
   userCount++;
-  const { id } = socket.client;
-  console.log(`User connected: ${id}`);
+  console.log(`User connected: ${socket.id}`);
 
   //emits counter to webpage
   io.emit('state change', userCount);
