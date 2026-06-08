@@ -1,32 +1,18 @@
 {
-  "name": "heroku-cra-node",
+  "name": "antelope-valley-poppies",
   "version": "3.0.0",
-  "description": "How to use create-react-app with a custom Node API on Heroku",
+  "description": "Antelope Valley Poppies interactive media experience",
   "engines": {
-    "node": "10.x"
+    "node": "18.x"
   },
   "scripts": {
     "start": "node server",
     "build": "cd client/ && npm install && npm run build"
   },
-  "cacheDirectories": [
-    "node_modules",
-    "react-ui/node_modules"
-  ],
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^4.7.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mars/heroku-cra-node.git"
-  },
-  "keywords": [
-    "node",
-    "heroku",
-    "create-react-app",
-    "react"
-  ],
   "license": "MIT",
   "devDependencies": {}
 }
